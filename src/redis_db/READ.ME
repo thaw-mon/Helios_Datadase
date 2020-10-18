@@ -1,0 +1,7 @@
+使用方法
+1. 开启或关闭redis服务
+./db_op.sh start|stop [port]+
+eg : ./db_op.sh start 7471 7472 7473
+2. 注意事项 ：建议使用root用户
+如果不是root用户使用 ./db_op.sh stop [port]+会存在如下问题
+/var/run/redis_7471.pid does not exist, process is not running
