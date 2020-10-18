@@ -14,9 +14,7 @@ using namespace std;
 class ReassignQueue{
 
 	private:
-		vector<set<sid_t>> objs; //TODO 修改为队列格式
-		//todo 添加一个reassigned_record;
-
+		vector<set<sid_t>> objs; 
 		vector<queue<sid_t> > quene_objs;
 		vector <set<sid_t>> reassign_record; //
 

@@ -12,7 +12,7 @@ void Repartitioner::run() {
 		while (1) {//queue()->endPrograms() != cfg->num_query_threads){
 			sid_t obj = queue()->pop(i);
 			if (obj == 0) {
-				sleep(10); //没有任务睡眠10 second
+				sleep(10); //no task sleep
 				continue;
 			}
 
@@ -130,7 +130,6 @@ void Repartitioner::up_edge_weight() {
 				//TODO this update move to vertex
 				printf("begin update DoI INDEX info node = %d\n",i);
 				vector<triple_t> edges = task->getEdge();
-				//时间测试
 				//
 				sid_t start = get_usec();
 				//db[i]->insert_DoI_index(edges, i);
