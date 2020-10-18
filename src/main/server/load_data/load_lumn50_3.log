@@ -1,0 +1,228 @@
+argv[0] = ./helios_server,argv[1] = 1,argv[2] = 1,argv[3] = 1,
+argv[0] = ./helios_server,argv[1] = 1,argv[2] = 1,argv[3] = 1,
+argv[0] = ./helios_server,argv[1] = 1,argv[2] = 1,argv[3] = 1,
+heliosConfig point : cfgPath = helios.cfg
+heliosConfig point : cfgPath = helios.cfg
+heliosConfig point : cfgPath = helios.cfg
+2, 3, 10, 5, 2, 3, 10, 5, 2, 3, 10, 5, start load data
+start load data
+start load data
+0 0 /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/str_index
+success insert dict data
+load data : server_id = 2 i= 0 thread_id = 0 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University0.nt
+0 0 /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/str_index
+success insert dict data
+load data : server_id = 0 i= 0 thread_id = 0 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University0.nt
+1 1 /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/str_normal
+1 1 /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/str_normal
+success insert dict data
+load data : server_id = 2 i= 2 thread_id = 2 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University2.nt
+success insert dict data
+load data : server_id = 0 i= 2 thread_id = 2 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University2.nt
+0 0 /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/str_index
+success insert dict data
+load data : server_id = 1 i= 0 thread_id = 0 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University0.nt
+success insert dict data
+load data : server_id = 2 i= 3 thread_id = 3 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University3.nt
+success insert dict data
+load data : server_id = 0 i= 3 thread_id = 3 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University3.nt
+success insert dict data
+load data : server_id = 2 i= 4 thread_id = 4 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University4.nt
+1 1 /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/str_normal
+success insert dict data
+load data : server_id = 0 i= 4 thread_id = 4 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University4.nt
+success insert dict data
+load data : server_id = 2 i= 5 thread_id = 5 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University5.nt
+success insert dict data
+load data : server_id = 1 i= 2 thread_id = 2 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University2.nt
+success insert dict data
+load data : server_id = 0 i= 5 thread_id = 5 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University5.nt
+success insert dict data
+load data : server_id = 2 i= 6 thread_id = 6 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University6.nt
+success insert dict data
+load data : server_id = 1 i= 3 thread_id = 3 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University3.nt
+success insert dict data
+load data : server_id = 0 i= 6 thread_id = 6 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University6.nt
+success insert dict data
+load data : server_id = 2 i= 7 thread_id = 7 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University7.nt
+success insert dict data
+load data : server_id = 0 i= 7 thread_id = 7 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University7.nt
+success insert dict data
+load data : server_id = 1 i= 4 thread_id = 4 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University4.nt
+success insert dict data
+load data : server_id = 2 i= 8 thread_id = 8 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University8.nt
+success insert dict data
+load data : server_id = 0 i= 8 thread_id = 8 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University8.nt
+success insert dict data
+load data : server_id = 2 i= 9 thread_id = 9 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University9.nt
+success insert dict data
+load data : server_id = 1 i= 5 thread_id = 5 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University5.nt
+success insert dict data
+load data : server_id = 0 i= 9 thread_id = 9 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University9.nt
+success insert dict data
+success insert dict data
+load data : server_id = 1 i= 6 thread_id = 6 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University6.nt
+load data : server_id = 2 i= 10 thread_id = 10 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University10.nt
+success insert dict data
+load data : server_id = 0 i= 10 thread_id = 10 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University10.nt
+success insert dict data
+load data : server_id = 2 i= 11 thread_id = 11 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University11.nt
+success insert dict data
+load data : server_id = 1 i= 7 thread_id = 7 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University7.nt
+success insert dict data
+load data : server_id = 0 i= 11 thread_id = 11 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University11.nt
+success insert dict data
+load data : server_id = 1 i= 8 thread_id = 8 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University8.nt
+success insert dict data
+load data : server_id = 2 i= 12 thread_id = 12 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University12.nt
+success insert dict data
+load data : server_id = 0 i= 12 thread_id = 12 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University12.nt
+success insert dict data
+load data : server_id = 1 i= 9 thread_id = 9 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University9.nt
+success insert dict data
+load data : server_id = 2 i= 13 thread_id = 13 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University13.nt
+success insert dict data
+load data : server_id = 2 i= 14 thread_id = 14 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University14.nt
+success insert dict data
+load data : server_id = 0 i= 13 thread_id = 13 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University13.nt
+success insert dict data
+load data : server_id = 1 i= 10 thread_id = 10 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University10.nt
+success insert dict data
+load data : server_id = 2 i= 15 thread_id = 15 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University15.nt
+success insert dict data
+load data : server_id = 0 i= 14 thread_id = 14 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University14.nt
+success insert dict data
+load data : server_id = 2 i= 16 thread_id = 16 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University16.nt
+success insert dict data
+load data : server_id = 1 i= 11 thread_id = 11 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University11.nt
+success insert dict data
+load data : server_id = 2 i= 17 thread_id = 17 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University17.nt
+success insert dict data
+load data : server_id = 0 i= 15 thread_id = 15 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University15.nt
+success insert dict data
+load data : server_id = 1 i= 12 thread_id = 12 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University12.nt
+success insert dict data
+load data : server_id = 2 i= 18 thread_id = 18 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University18.nt
+success insert dict data
+load data : server_id = 0 i= 16 thread_id = 16 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University16.nt
+success insert dict data
+load data : server_id = 1 i= 13 thread_id = 13 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University13.nt
+success insert dict data
+load data : server_id = 2 i= 19 thread_id = 19 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University19.nt
+success insert dict data
+load data : server_id = 0 i= 17 thread_id = 17 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University17.nt
+success insert dict data
+load data : server_id = 1 i= 14 thread_id = 14 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University14.nt
+success insert dict data
+load data : server_id = 0 i= 18 thread_id = 18 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University18.nt
+success insert dict data
+load data : server_id = 1 i= 15 thread_id = 15 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University15.nt
+success insert dict data
+load data : server_id = 0 i= 19 thread_id = 19 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University19.nt
+success insert dict data
+load data : server_id = 1 i= 16 thread_id = 16 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University16.nt
+success insert dict data
+load data : server_id = 1 i= 17 thread_id = 17 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University17.nt
+success insert dict data
+load data : server_id = 1 i= 18 thread_id = 18 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University18.nt
+success insert dict data
+load data : server_id = 1 i= 19 thread_id = 19 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University19.nt
+success insert dict data
+load data : server_id = 2 i= 1 thread_id = 1 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University1.nt
+success insert dict data
+load data : server_id = 1 i= 1 thread_id = 1 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University1.nt
+success insert dict data
+load data : server_id = 0 i= 1 thread_id = 1 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University1.nt
+load data : server_id = 2 i= 25 thread_id = 5 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University25.nt
+load data : server_id = 2 i= 20 thread_id = 0 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University20.nt
+load data : server_id = 0 i= 20 thread_id = 0 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University20.nt
+load data : server_id = 2 i= 22 thread_id = 2 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University22.nt
+load data : server_id = 0 i= 25 thread_id = 5 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University25.nt
+load data : server_id = 2 i= 34 thread_id = 14 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University34.nt
+load data : server_id = 0 i= 34 thread_id = 14 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University34.nt
+load data : server_id = 0 i= 22 thread_id = 2 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University22.nt
+load data : server_id = 1 i= 20 thread_id = 0 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University20.nt
+load data : server_id = 1 i= 25 thread_id = 5 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University25.nt
+load data : server_id = 2 i= 27 thread_id = 7 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University27.nt
+load data : server_id = 2 i= 33 thread_id = 13 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University33.nt
+load data : server_id = 2 i= 28 thread_id = 8 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University28.nt
+load data : server_id = 2 i= 36 thread_id = 16 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University36.nt
+load data : server_id = 1 i= 22 thread_id = 2 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University22.nt
+load data : server_id = 2 i= 30 thread_id = 10 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University30.nt
+load data : server_id = 0 i= 27 thread_id = 7 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University27.nt
+load data : server_id = 0 i= 33 thread_id = 13 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University33.nt
+load data : server_id = 1 i= 34 thread_id = 14 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University34.nt
+load data : server_id = 0 i= 28 thread_id = 8 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University28.nt
+load data : server_id = 0 i= 36 thread_id = 16 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University36.nt
+load data : server_id = 0 i= 30 thread_id = 10 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University30.nt
+load data : server_id = 1 i= 27 thread_id = 7 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University27.nt
+load data : server_id = 2 i= 35 thread_id = 15 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University35.nt
+load data : server_id = 2 i= 38 thread_id = 18 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University38.nt
+load data : server_id = 1 i= 33 thread_id = 13 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University33.nt
+load data : server_id = 2 i= 23 thread_id = 3 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University23.nt
+load data : server_id = 2 i= 24 thread_id = 4 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University24.nt
+load data : server_id = 1 i= 28 thread_id = 8 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University28.nt
+load data : server_id = 2 i= 21 thread_id = 1 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University21.nt
+load data : server_id = 2 i= 29 thread_id = 9 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University29.nt
+load data : server_id = 0 i= 35 thread_id = 15 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University35.nt
+load data : server_id = 1 i= 30 thread_id = 10 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University30.nt
+load data : server_id = 1 i= 36 thread_id = 16 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University36.nt
+load data : server_id = 0 i= 23 thread_id = 3 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University23.nt
+load data : server_id = 0 i= 38 thread_id = 18 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University38.nt
+load data : server_id = 2 i= 37 thread_id = 17 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University37.nt
+load data : server_id = 0 i= 21 thread_id = 1 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University21.nt
+load data : server_id = 0 i= 29 thread_id = 9 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University29.nt
+load data : server_id = 2 i= 26 thread_id = 6 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University26.nt
+load data : server_id = 2 i= 31 thread_id = 11 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University31.nt
+load data : server_id = 0 i= 24 thread_id = 4 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University24.nt
+load data : server_id = 1 i= 23 thread_id = 3 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University23.nt
+load data : server_id = 1 i= 21 thread_id = 1 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University21.nt
+load data : server_id = 2 i= 39 thread_id = 19 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University39.nt
+load data : server_id = 1 i= 35 thread_id = 15 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University35.nt
+load data : server_id = 1 i= 38 thread_id = 18 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University38.nt
+load data : server_id = 2 i= 32 thread_id = 12 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University32.nt
+load data : server_id = 0 i= 31 thread_id = 11 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University31.nt
+load data : server_id = 0 i= 26 thread_id = 6 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University26.nt
+load data : server_id = 1 i= 24 thread_id = 4 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University24.nt
+load data : server_id = 1 i= 29 thread_id = 9 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University29.nt
+load data : server_id = 0 i= 32 thread_id = 12 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University32.nt
+load data : server_id = 0 i= 37 thread_id = 17 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University37.nt
+load data : server_id = 0 i= 39 thread_id = 19 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University39.nt
+load data : server_id = 1 i= 37 thread_id = 17 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University37.nt
+load data : server_id = 1 i= 26 thread_id = 6 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University26.nt
+load data : server_id = 1 i= 31 thread_id = 11 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University31.nt
+load data : server_id = 1 i= 39 thread_id = 19 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University39.nt
+load data : server_id = 2 i= 45 thread_id = 5 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University45.nt
+load data : server_id = 2 i= 40 thread_id = 0 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University40.nt
+load data : server_id = 1 i= 32 thread_id = 12 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University32.nt
+load data : server_id = 0 i= 40 thread_id = 0 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University40.nt
+load data : server_id = 2 i= 42 thread_id = 2 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University42.nt
+load data : server_id = 0 i= 45 thread_id = 5 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University45.nt
+load data : server_id = 1 i= 40 thread_id = 0 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University40.nt
+load data : server_id = 2 i= 47 thread_id = 7 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University47.nt
+load data : server_id = 1 i= 45 thread_id = 5 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University45.nt
+load data : server_id = 0 i= 42 thread_id = 2 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University42.nt
+load data : server_id = 2 i= 48 thread_id = 8 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University48.nt
+load data : server_id = 1 i= 42 thread_id = 2 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University42.nt
+load data : server_id = 2 i= 41 thread_id = 1 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University41.nt
+load data : server_id = 0 i= 48 thread_id = 8 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University48.nt
+load data : server_id = 0 i= 47 thread_id = 7 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University47.nt
+load data : server_id = 2 i= 44 thread_id = 4 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University44.nt
+load data : server_id = 2 i= 43 thread_id = 3 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University43.nt
+load data : server_id = 2 i= 49 thread_id = 9 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University49.nt
+load data : server_id = 1 i= 47 thread_id = 7 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University47.nt
+load data : server_id = 0 i= 41 thread_id = 1 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University41.nt
+load data : server_id = 1 i= 48 thread_id = 8 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University48.nt
+load data : server_id = 2 i= 46 thread_id = 6 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University46.nt
+load data : server_id = 0 i= 43 thread_id = 3 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University43.nt
+load data : server_id = 0 i= 44 thread_id = 4 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University44.nt
+load data : server_id = 0 i= 49 thread_id = 9 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University49.nt
+load data : server_id = 1 i= 41 thread_id = 1 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University41.nt
+load data : server_id = 1 i= 43 thread_id = 3 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University43.nt
+load data : server_id = 0 i= 46 thread_id = 6 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University46.nt
+2 data loading time: 189.2277529 second
+load data : server_id = 1 i= 49 thread_id = 9 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University49.nt
+load data : server_id = 1 i= 44 thread_id = 4 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University44.nt
+load data : server_id = 1 i= 46 thread_id = 6 path = /usr/data/tuhongwei/helios_project/lubm-uba/id-lubm-50/id_University46.nt
+0 data loading time: 208.5394189 second
+1 data loading time: 225.9177039 second

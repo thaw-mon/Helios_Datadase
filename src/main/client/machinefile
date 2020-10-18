@@ -1,0 +1,3 @@
+node2 7471 /tmp/redis_7471.sock 
+node4 7471 /tmp/redis_7471.sock 
+node5 7471 /tmp/redis_7471.sock 
