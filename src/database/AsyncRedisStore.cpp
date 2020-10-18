@@ -20,7 +20,9 @@ void AsyncRedisStore::get_p_counter( sid_t p, vector<int> *buf){
 	//ev_loop(EV_DEFAULT_ 0);
 }
 
-//fuction : 获取节点边权值信息和边权值信息
+/*
+get infomation to reassign
+*/
 void AsyncRedisStore::get_reassign_info( sid_t v, vector<int> *buf, bool isTS){
 	//redisLibevAttach(EV_DEFAULT_ c);
 	int executed = 1;
@@ -139,10 +141,6 @@ void AsyncRedisStore::batch_update_vertexweight(const vector<sid_t> &vs, int inc
       		usleep(1000);
 	}
 }
-//TODO may del
-void AsyncRedisStore::batch_update_DoI_index(const vector<triple_t>& triples, int edgelog_len)
-{
-}
 
 ///////////////////////////////////////////////////////////////////
 
@@ -171,13 +169,6 @@ void AsyncRedisStore::write_command(const vector<string> &params){
 	redisAsyncHandleWrite(c);
 }
 
-/*void AsyncRedisStore::write_command(const char** command, int argc){
-	printf("commands: %d ", argc);
-	for(int i = 0; i < argc;  i++)
-		printf("%s l", command[i]);
-	redisAsyncCommandArgv(c, NULL, NULL, argc, command, NULL);
-	redisAsyncHandleWrite(c);
-}*/
 
 void AsyncRedisStore::read_zset(string key, vector<sid_t> *results){
 	//redisLibevAttach(EV_DEFAULT_ c);
@@ -260,7 +251,6 @@ void AsyncRedisStore::traverse_vertex(QueryNode* queryRoot, const vector<sid_t> 
 			targ->root = queryRoot; targ->results = results;
 			sid_t key_t = key_vpid_t(s, p, NO_INDEX,edge->d);
 			c_num++;
-			//TODO 优化策略使用MGET命令
 			redisAsyncCommand(c, traverse_callback, targ, "GET %ld", key_t);
 		}
 	}
@@ -327,22 +317,22 @@ void AsyncRedisStore::batch_insert_DoI_index(vector<map<sid_t, int>>& DoI_index)
 			redisAsyncCommand(c, rediswrite_callback, &executed, "HINCRBY %ld %d %d",
 				doi_key, i, iter->second);
 			c_num++;
-			//if (c_num > 50000) {
-			//	//cout << "current c_num = " << c_num << ";current excuted = " << executed << endl;
-			//	while (executed < c_num) {
-			//		redisAsyncHandleWrite(c);
-			//		redisAsyncHandleRead(c);
-			//		usleep(1000);
-			//	}
-			//	executed = 0; c_num = 0;
-			//	continue;
-			//}
+			if (c_num > 50000) {
+				//cout << "current c_num = " << c_num << ";current excuted = " << executed << endl;
+				while (executed < c_num) {
+					redisAsyncHandleWrite(c);
+					redisAsyncHandleRead(c);
+					usleep(1000);
+				}
+				executed = 0; c_num = 0;
+				continue;
+			}
 		}
-		/*while (executed < c_num) {
+		while (executed < c_num) {
 			redisAsyncHandleWrite(c);
 			redisAsyncHandleRead(c);
 			usleep(1000);
-		}*/
+		}
 	}
 	//cout << "current c_num = " << c_num << ";current excuted = " << executed << endl;
 	while (executed < c_num) {
@@ -362,17 +352,17 @@ void AsyncRedisStore::batch_insert_DoI_index(map<sid_t, int>& DoI_index,int host
 		redisAsyncCommand(c, rediswrite_callback, &executed, "HINCRBY %ld %d %d",
 			doi_key, host, iter->second);
 		c_num++;
-		//
-		//if (c_num > 50000) {
-		//	//cout << "current c_num = " << c_num << ";current excuted = " << executed << endl;
-		//	while (executed < c_num) {
-		//		redisAsyncHandleWrite(c);
-		//		redisAsyncHandleRead(c);
-		//		usleep(1000);
-		//	}
-		//	executed = 0; c_num = 0;
-		//	continue;
-		//}
+		
+		if (c_num > 50000) {
+			//cout << "current c_num = " << c_num << ";current excuted = " << executed << endl;
+			while (executed < c_num) {
+				redisAsyncHandleWrite(c);
+				redisAsyncHandleRead(c);
+				usleep(1000);
+			}
+			executed = 0; c_num = 0;
+			continue;
+		}
 	}
 		
 	//cout << "current c_num = " << c_num << ";current excuted = " << executed << endl;
@@ -382,7 +372,7 @@ void AsyncRedisStore::batch_insert_DoI_index(map<sid_t, int>& DoI_index,int host
 		usleep(1000);
 	}
 }
-//默认值为1
+
 void AsyncRedisStore::batch_insert_DoI_index(vector<vector<sid_t>>& DoI_index) {
 	int num = DoI_index.size();
 	int executed = 0, c_num = 0;
@@ -416,100 +406,6 @@ void AsyncRedisStore::batch_insert_DoI_index(vector<vector<sid_t>>& DoI_index) {
 	}
 
 }
-
-//add read write test
-void AsyncRedisStore::batch_read_test(const vector<sid_t>& vs, vector<int>* result){
-	int executed = 0,c_num = 0;
-	uint64_t start = get_usec();
-	for (sid_t s : vs) {
-		async_pam* targ = new async_pam(result, &executed);
-		sid_t doi_key = key_vpid_t(s, 0, DoI_INDEX, (dir_t)0);
-		c_num++;
-		redisAsyncCommand(c, read_hashset_callback, targ, "HGET %ld %d", doi_key ,0);
-		//添加下面的部分就很慢了？？
-		/*if (c_num > 1000) {
-			executed = c_num;
-			while (executed > 0) {
-				redisAsyncHandleWrite(c);
-				redisAsyncHandleRead(c);
-				usleep(1000);
-			}
-		}*/
-	}
-	if (c_num > 0) {
-		executed = c_num;
-		while (executed > 0) {
-			redisAsyncHandleWrite(c);
-			redisAsyncHandleRead(c);
-			usleep(1000);
-		}
-	}
-	printf("read_test command time :%ldusec \n", (get_usec() - start) / 1000000);
-}
-
-void AsyncRedisStore::batch_write_test(const vector<sid_t>& vs) {
-	int executed = 0, c_num = 0;
-	uint64_t start = get_usec();
-	//string field = "node" + to_string(i);
-	for (int obj : vs) {
-		sid_t doi_key = key_vpid_t(obj, 0, DoI_INDEX, (dir_t)0);
-		redisAsyncCommand(c, rediswrite_callback, &executed, "HINCRBY %ld %d %d",
-			doi_key, 0, 1);
-		c_num++;
-		/*if (c_num > 1000) {
-			executed = c_num;
-			while (executed > 0) {
-				redisAsyncHandleWrite(c);
-				redisAsyncHandleRead(c);
-				usleep(1000);
-			}
-		}*/
-	}
-		
-	while (executed < c_num) {
-		redisAsyncHandleWrite(c);
-		redisAsyncHandleRead(c);
-		usleep(1000);
-	}
-	printf("write_test command time :%ld sec \n", (get_usec() - start) / 1000000);
-}
-
-//
-void AsyncRedisStore::batch_insert_DoI_index_new(vector<vector<pair<sid_t, sid_t>>> DoI_index,dir_t d) {
-	int num = DoI_index.size();
-	int executed = 0, c_num = 0;
-	for (int i = 0; i < num; i++) {
-		//string field = "node" + to_string(i);
-		//printf("i = %d , DoI_index size = %d\n",i, DoI_index[i].size());
-		for (pair<sid_t, sid_t> obj : DoI_index[i]) {
-			sid_t doI_key = key_vpid_t(obj.first, i, DoI_INDEX, d);
-			// 改为使用ZSET数据存储
-			//首先向redis插入 obj.second [s,filed,o]
-			//printf("v = %ld, i = %d, zset key = %ld, value = %ld\n",obj.first,i,doI_key, obj.second);
-			redisAsyncCommand(c, rediswrite_callback, &executed, "ZADD %ld %ld %ld",
-				doI_key,obj.second, obj.second);
-			c_num++;
-			if (c_num > 50000) {
-				cout << "insert_DoI_index current c_num = " << c_num << ";current excuted = " << executed << endl;
-				while (executed < c_num) {
-					redisAsyncHandleWrite(c);
-					redisAsyncHandleRead(c);
-					usleep(1000);
-				}
-				executed = 0; c_num = 0;
-				continue;
-			}
-		}
-
-	}
-
-	while (executed < c_num) {
-		redisAsyncHandleWrite(c);
-		redisAsyncHandleRead(c);
-		usleep(1000);
-	}
-}
-
 
 void AsyncRedisStore::del_keys(vector<sid_t> keys) {
 	int n = keys.size();
@@ -593,26 +489,6 @@ void AsyncRedisStore::batch_get_DoI_List(vector<sid_t>& vs, int excuted_num, vec
 }
 
 
-void AsyncRedisStore::get_DoI_List_new(sid_t v, int excuted_num, vector<int>* results) {
-
-	int executed = excuted_num;
-	//printf("get_DoI_List_new start v = %ld\n", v);
-	async_pam* targ = new async_pam(results, &executed);
-	//这里执行了三次
-	for (int i = 0; i < excuted_num; i++) {
-		sid_t doI_key = key_vpid_t(v, i, DoI_INDEX, (dir_t)OUT);
-		//printf("DoI key = %ld\n", doI_key);
-		redisAsyncCommand(c, read_zset_len_callback, targ, "ZCARD %ld", doI_key);
-	}
-	//这里only执行了两次后爆出异常
-	while (executed >= 0) {
-		redisAsyncHandleWrite(c); // This sends the command.
-		redisAsyncHandleRead(c); // This calls the callback if the reply has been received.
-		//usleep(1000);
-	}
-	//printf("get_DoI_List_new end v = %ld, result size = %d\n", v,results->size());
-
-}
 //abandon
 int AsyncRedisStore::get_max_Di(sid_t val, sid_t sid, int num_servers) {
 	
@@ -632,7 +508,6 @@ int AsyncRedisStore::get_max_Di(sid_t val, sid_t sid, int num_servers) {
 		redisAsyncHandleRead(c);
 		//usleep(1000);
 	}
-	//cout << "buf size = " << buf.size() << endl; //由于字段不存在时会返回NULL,导致 buf size != num_servers
 	assert (buf.size() == num_servers);
 	int maxNode = sid; //默认为本地节点
 	int maxDi = buf[sid];
@@ -645,7 +520,7 @@ int AsyncRedisStore::get_max_Di(sid_t val, sid_t sid, int num_servers) {
 	return maxNode;
 }
 
-//存在性判断
+
 bool AsyncRedisStore::isExist(sid_t s) {
 	//RedisModule_Call(ctx, "HSET", "lll", (long long)sl_key, (long long)EXISTS, (long long)1);
 	int executed = 1;
@@ -667,6 +542,7 @@ bool AsyncRedisStore::isExist(sid_t s) {
 	return results[0]==1;
 }
 //return exist node 
+
 vector<sid_t> AsyncRedisStore::batch_isExist(vector<sid_t>& vs) {
 	int executed = vs.size();
 	vector<int> results;
@@ -702,13 +578,7 @@ bool AsyncRedisStore::remove_DoI_index(vector<string> params) {
 	for (int i = 0; i < argc; i++) {
 		command += params[i] + " ";
 	}
-	//const char** command = (const char**)malloc(argc * sizeof(char*));
-	//for (int i = 0; i < argc; i++) {
-	//	char* array = new char[params[i].length() + 1];
-	//	command[i] = array;
-	//}
-	////执行命令
-	//redisAsyncCommandArgv(c, del_hashset_callback, targ, argc, command, NULL);
+	
 	redisAsyncCommand(c, del_hashset_callback, targ, command.c_str());
 	redisAsyncHandleWrite(c);
 	redisAsyncHandleRead(c);
@@ -760,7 +630,6 @@ void AsyncRedisStore::batch_getloc3(const vector<sid_t>& vs, map<sid_t,int>* v_l
 	}
 	//ev_loop(EV_DEFAULT_ 0);
 }
-//性能优化策略使用MGET方法替代GET方法 key num batch = [10,100] 过大时性能会急剧降低
 void AsyncRedisStore::batch_getloc2(const vector<sid_t>& vs, map<int, vector<sid_t>>* v_locs) {
 	int executed = vs.size();
 	int batchNum = 100;
@@ -787,7 +656,6 @@ void AsyncRedisStore::batch_getloc2(const vector<sid_t>& vs, map<int, vector<sid
 	}
 }
 
-//增加函数
 /**
 ***  loadPredicates
 *** function : Return entities hosted on the current node that have at least incoming (dir = IN) or outgoing (dir = OUT) edge labeled as p

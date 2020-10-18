@@ -10,9 +10,6 @@ QueryEdge::~QueryEdge(){
 		
 }
 
-//获取edge的src_union_key (索引)
-//if 边的另一个节点是var类型 保存的是存储在redis的pd_key
-// 否则获取 od_key或者opd_key
 int QueryEdge::preprocess(int tgt_s, AsyncRedisStore* async_store){
 	if(!(exec_flag == 1 || exec_flag == 3))// need preprocess
 		return 0;
@@ -25,7 +22,6 @@ int QueryEdge::preprocess(int tgt_s, AsyncRedisStore* async_store){
 		if((node->bind_val).size() >100)
 			continue;
 		sid_t p = bind_val[i];
-		//边对应的节点为bound
 		if((node->bind_val).size() == 0){
 			string key_t = std::to_string(key_vpid_t(0, p, INDEX, d));
 			int_keys.push_back(key_t);
@@ -54,7 +50,6 @@ int QueryEdge::preprocess(int tgt_s, AsyncRedisStore* async_store){
 		//cout << "size =3 key_t =" << int_keys[2].c_str() << endl;
 		return 1;
 	}
-	//f : 获取集合的并集
 	string c = "SUNIONSTORE";
 	int_keys[0] = c;
 	int_keys[1] = src_union_key[tgt_s];

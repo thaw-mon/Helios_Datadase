@@ -32,7 +32,6 @@ class QueryNode{
 		//add couter
 		sid_t edge_cut_counter = 0;
 		sid_t edge_cut_counter_spend_time = 0;
-		//int edge_cut_counter_reassgin = 0; //重分配后的edge_cut计数 移除，动态
 
 		pthread_spinlock_t prune_lock;
 		pthread_spinlock_t bind_lock;
@@ -95,7 +94,6 @@ class QueryNode{
 			if(keys.size() == 3)
 				return 1;
 		
-			//fuction 获取集合的交集
 			string c = "SINTERSTORE";
 			keys[0] = c;
 			keys[1] = src_inter_key[tgt_s];

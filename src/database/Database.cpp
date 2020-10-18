@@ -173,7 +173,7 @@ else {
 	return queryRoot;
 }
 
-//获取local对应的scr_bind数据
+
 int Database::evaluate_root_binding_local(QueryNode* queryRoot, vector<sid_t>* src_bind) {
 	queryRoot->init_interunion_key(num_servers);
 	int flag = queryRoot->preprocess(sid, async_store[sid][0]);
@@ -200,7 +200,6 @@ int Database::_client_pattern_evaluate(int tgt_s, vector<sid_t> src_bind, QueryN
 	if (src_bind.size() != 0)
 		if (inter_sets.size() != 0) {
 			//printf("@%d inter_sets size %d src_bind size %d\n", sid, inter_sets.size(), src_bind.size());
-			//获取集合的交集
 			inter_sets = intersect(inter_sets, src_bind);
 			if (inter_sets.size() != src_bind.size()) {
 				vector<sid_t> bind_prune = difference(src_bind, inter_sets);
@@ -232,9 +231,6 @@ int Database::_client_pattern_evaluate(int tgt_s, vector<sid_t> src_bind, QueryN
 		//printf("@%d connect %d thread %d run edge %d\n", sid, tgt_s, aid, j);
 ;		async_store[tgt_s][aid]->traverse_vertex(queryRoot, inter_sets,
 			edge, &(res[j]));
-		//TODO use batch_traverse_vertex test
-		/*async_store[tgt_s][aid]->batch_traverse_vertex(queryRoot, inter_sets,
-			edge, &(res[j]));*/
 		//printf("@%d thread %d edge %d local_results %d and node name = %s, node size = %d\n", sid, aid, j, res[j].size(), queryRoot->name.c_str(),inter_sets.size());
 	}
 	for (int j = 0; j < edge_sz; j++) {
@@ -242,7 +238,6 @@ int Database::_client_pattern_evaluate(int tgt_s, vector<sid_t> src_bind, QueryN
 			continue;
 		if ((queryRoot->edges)[j]->towardsJoint) {
 			//(queryRoot->edges)[j]->result = res[j];
-			//优化策略：基类results的位置 
 			//(queryRoot->edges)[j]->result_begin = results->size();
 			//(queryRoot->edges)[j]->result_size = res[j].size();
 			(queryRoot->edges)[j]->result.insert((queryRoot->edges)[j]->result.end(), res[j].begin(), res[j].end());
@@ -280,9 +275,9 @@ for one edge [i,j] we just both update DoI[i] and DoI[j]
 and we need record v[i] all node
 */
 void Database::insert_DoI_index(vector<triple_t> tripple_res, int tgt_s) {
-	//1.创建DoI index 格式  sid_t sc_key = key_vpid_t(tri.s, 0, COUNTER, (dir_t)0);
+	//1.DoI index  sid_t sc_key = key_vpid_t(tri.s, 0, COUNTER, (dir_t)0);
 	//call RedisModule_Call(ctx, "HINCRBY", "lll", (long long)sc_key, (long long)tgt_s, (long long)1);
-	vector<vector<vector<sid_t>>> DoI_index_node_target; //DoI[i][j] 标识存储node i的数据 x 的的第DoI FIELD j add 1
+	vector<vector<vector<sid_t>>> DoI_index_node_target; //DoI[i][j] 
 	vector<vector<map<sid_t, int>>> DoI_index_node_map;
 	DoI_index_node_target.resize(num_servers);
 	DoI_index_node_map.resize(num_servers);
@@ -339,11 +334,7 @@ void Database::insert_DoI_index(vector<triple_t> tripple_res, int tgt_s) {
 	printf("Test : insert_DoI_index to redis spend Time  = %d second\n", (end - start) / 1000000);
 }
 
-//this way get all o_vals node direct
-//this way get all loc spend 40 second and last way spend 300 second, 有十倍的提升
-//but in insert data to redis spend to mush time need improve
 void Database::insert_DoI_index2(vector<triple_t> tripple_res, int tgt_s) {
-	//1.创建DoI index 格式  sid_t sc_key = key_vpid_t(tri.s, 0, COUNTER, (dir_t)0);
 	//call RedisModule_Call(ctx, "HINCRBY", "lll", (long long)sc_key, (long long)tgt_s, (long long)1);
 	vector<vector<vector<sid_t>>> DoI_index_node_target; //DoI[i][j] 标识存储node i的数据 x 的的第DoI FIELD j add 1
 	vector<vector<map<sid_t, int>>> DoI_index_node_map;
@@ -417,7 +408,6 @@ void Database::insert_DoI_index2(vector<triple_t> tripple_res, int tgt_s) {
 }
 
 void Database::insert_DoI_index3(vector<triple_t> tripple_res, int tgt_s) {
-	//1.创建DoI index 格式  sid_t sc_key = key_vpid_t(tri.s, 0, COUNTER, (dir_t)0);
 	//call RedisModule_Call(ctx, "HINCRBY", "lll", (long long)sc_key, (long long)tgt_s, (long long)1);
 	vector<vector<vector<sid_t>>> DoI_index_node_target; //DoI[i][j] 标识存储node i的数据 x 的的第DoI FIELD j add 1
 	vector<vector<map<sid_t, int>>> DoI_index_node_map;
@@ -484,7 +474,6 @@ void Database::insert_DoI_index3(vector<triple_t> tripple_res, int tgt_s) {
 }
 
 void Database::insert_DoI_index4(vector<triple_t> tripple_res, int tgt_s) {
-	//1.创建DoI index 格式  sid_t sc_key = key_vpid_t(tri.s, 0, COUNTER, (dir_t)0);
 	//call RedisModule_Call(ctx, "HINCRBY", "lll", (long long)sc_key, (long long)tgt_s, (long long)1);
 	vector<vector<vector<sid_t>>> DoI_index_node_target; //DoI[i][j] 标识存储node i的数据 x 的的第DoI FIELD j add 1
 	vector<map<sid_t, int>> DoI_index_node_map;
@@ -501,11 +490,7 @@ void Database::insert_DoI_index4(vector<triple_t> tripple_res, int tgt_s) {
 		o_vals_all.push_back(triple.s);
 		o_vals_all.insert(o_vals_all.end(), triple.o_vals.begin(), triple.o_vals.end());
 	}
-	//sort_rem_dup(&o_vals_all);
-	//push loc_map --> map [key = v, value = loc]
 	map<sid_t, int> value_map = batch_get_global_vloc2(o_vals_all);
-	//sid_t end = get_usec();
-	//printf("Test : insert_DoI_index4 get loc  spend Time  = %d second\n", (end - start) / 1000000);
 	for (triple_t tri : tripple_res) {
 		//we first get the Info veretex s
 		int sLoc = value_map[tri.s];
@@ -526,131 +511,15 @@ void Database::insert_DoI_index4(vector<triple_t> tripple_res, int tgt_s) {
 		}
 	}
 
-	//end = get_usec();
-	//printf("Test : insert_DoI_index4 get all data  spend Time  = %d second\n", (end - start) / 1000000);
 
 	//start = get_usec();
-	//2.考虑使用redis-module实现
 	for (int i = 0; i < num_servers; i++) {
-		//async_store[i][0]->batch_insert_DoI_index(DoI_index_node_map[i],i);
-		//async_store[i][0]->batch_insert_DoI_index(DoI_index_node_target[i]);
 		counter_store[i]->batch_insert_DoI_index(DoI_index_node_map[i], i);
 		counter_store[i]->batch_insert_DoI_index(DoI_index_node_target[i]);
 	}
 	//end = get_usec();
 	//printf("Test : insert_DoI_index4 to redis spend Time  = %d second\n", (end - start) / 1000000);
 }
-
-
-//this function spend too mush time should update
-void Database::insert_DoI_index_new(vector<triple_t> tripple_res, int tgt_s) {
-	//add time count;
-	sid_t start = get_usec();
-	vector<vector<vector<pair<sid_t,sid_t>>>> DoI_index_node_out; 
-	vector<vector<vector<pair<sid_t, sid_t>>>> DoI_index_node_in;
-	//DoI_index_node.resize(num_servers);
-	DoI_index_node_out.resize(num_servers);
-	DoI_index_node_in.resize(num_servers);
-	for (int i = 0; i < num_servers; i++) {
-		//DoI_index_node[i].resize(num_servers);
-		DoI_index_node_out[i].resize(num_servers);
-		DoI_index_node_in[i].resize(num_servers);
-	}
-	//printf("start insert_DoI_index_new sid = %d\n", tgt_s);
-
-	for (triple_t tri : tripple_res) {
-		//we first get the Info veretex s
-		int sLoc = get_global_vloc(tri.s);
-		
-		//1.get o_vals loc 
-		vector<sid_t> o_vals = tri.o_vals;
-		map<int, vector<sid_t>> v_loc_map = batch_get_global_vloc(o_vals); //get o_vals loc 
-		
-		for (int i = 0; i < num_servers; i++) {
-			if (v_loc_map.find(i) == v_loc_map.end()) {
-				continue;
-			}
-			vector<sid_t> o_loc_vals = v_loc_map[i];
-			//s p d o  s[tgt_s]-->o[i] s[o_loc]++ and o[o_loc++]
-			for (int j = 0; j < o_loc_vals.size(); j++) {
-				DoI_index_node_out[sLoc][i].push_back(pair<sid_t, sid_t>(tri.s,o_loc_vals[j]));
-				DoI_index_node_in[i][i].push_back(pair<sid_t, sid_t>(o_loc_vals[j], tri.s));
-			}
-			//DoI_index_node[i][i].insert(DoI_index_node[i][i].end(), o_loc_vals.begin(), o_loc_vals.end());
-		}
-	}
-
-//#pragma omp parallel for num_threads(thread_num)
-	for (int i = 0; i < num_servers; i++) {
-
-		counter_store[i]->batch_insert_DoI_index_new(DoI_index_node_out[i],OUT);
-		counter_store[i]->batch_insert_DoI_index_new(DoI_index_node_in[i],IN);
-	}
-	//printf("end batch_insert_DoI_index_new\n");
-	sid_t end = get_usec();;
-	cout << "insert DoI index new  spend time = " << (end - start) / 1000000 << " second " << endl;
-}
-
-//
-void Database::insert_DoI_index_new2(vector<triple_t> tripple_res, int tgt_s) {
-	sid_t start = get_usec();
-	vector<vector<vector<pair<sid_t, sid_t>>>> DoI_index_node_out;
-	vector<vector<vector<pair<sid_t, sid_t>>>> DoI_index_node_in;
-	//DoI_index_node.resize(num_servers);
-	DoI_index_node_out.resize(num_servers);
-	DoI_index_node_in.resize(num_servers);
-	for (int i = 0; i < num_servers; i++) {
-		//DoI_index_node[i].resize(num_servers);
-		DoI_index_node_out[i].resize(num_servers);
-		DoI_index_node_in[i].resize(num_servers);
-	}
-	//printf("start insert_DoI_index_new sid = %d\n", tgt_s);
-	//
-	vector<sid_t> o_vals_all;
-	for (triple_t triple : tripple_res) {
-		o_vals_all.push_back(triple.s);
-		o_vals_all.insert(o_vals_all.end(), triple.o_vals.begin(), triple.o_vals.end());
-	}
-	sort_rem_dup(&o_vals_all);
-	map<int, vector<sid_t>> all_loc_map = batch_get_global_vloc(o_vals_all); //get o_vals loc
-	//push loc_map --> map [key = v, value = loc]
-	map<sid_t, int> value_map;
-	for (int i = 0; i < num_servers; i++) {
-		if (all_loc_map.find(i) == all_loc_map.end()) {
-			continue;
-		}
-		vector<sid_t> o_loc_vals = all_loc_map[i];
-		for (sid_t o : o_loc_vals) {
-			value_map[o] = i;
-		}
-	}
-
-	for (triple_t tri : tripple_res) {
-		//we first get the Info veretex s
-		int sLoc =value_map[tri.s];
-
-		//1.get o_vals loc 
-		vector<sid_t> o_vals = tri.o_vals;
-		//map<int, vector<sid_t>> v_loc_map = batch_get_global_vloc(o_vals); //get o_vals loc 
-		for (sid_t o : o_vals) {
-			int oLoc = value_map[o];
-			DoI_index_node_out[sLoc][oLoc].push_back(pair<sid_t, sid_t>(tri.s,o));
-			DoI_index_node_in[oLoc][oLoc].push_back(pair<sid_t, sid_t>(o, tri.s));
-		}
-		
-	}
-
-	//#pragma omp parallel for num_threads(thread_num)
-	for (int i = 0; i < num_servers; i++) {
-
-		counter_store[i]->batch_insert_DoI_index_new(DoI_index_node_out[i], OUT);
-		counter_store[i]->batch_insert_DoI_index_new(DoI_index_node_in[i], IN);
-	}
-	//printf("end batch_insert_DoI_index_new\n");
-	sid_t end = get_usec();;
-	cout << "insert DoI index new2  spend time = " << (end - start) / 1000000 << " second " << endl;
-}
-
 
 
 //update DoI info
@@ -721,10 +590,6 @@ int Database::client_pattern_evaluate_global(QueryNode* queryRoot, vector<triple
 }
 
 int Database::client_pattern_evaluate_local(QueryNode* queryRoot, vector<triple_t> *results){
-	//Here tmp for test
-	//testReadAndWrite();
-	//return 0;
-
 	if(queryRoot == NULL)
 		return 0;
 	queryRoot->init_interunion_key(num_servers);
@@ -743,11 +608,10 @@ int Database::client_pattern_evaluate(int sid, const vector<triple_t> &triples,
 }
 
 
-//deprecated ： 效率没有原来的高 client_pattern_evaluate_local
+//deprecated ：  client_pattern_evaluate_local
 void Database::client_pattern_evaluate_local2(QueryNode* queryRoot, vector<triple_t>* results) {
 	if (queryRoot == NULL || queryRoot->edges.size()==0)
 		return ;
-	//对节点的每条边进行模式匹配
 	vector<vector<triple_t>> edge_results;
 	int edge_size = (queryRoot->edges).size();
 	edge_results.resize(edge_size);
@@ -792,8 +656,6 @@ void Database::client_pattern_evaluate_local2(QueryNode* queryRoot, vector<tripl
 	cout << "Test : merge bind_val spend time = " << (float)(end - start) / 1000000 << endl;
 }
 
-//TOOD 重写为三元组模式(如何和之前的qp结合到一起)
-//重新为不使用triplePattern
 void Database::matchPattern(QueryNode* node, QueryEdge* edge, vector<triple_t>* results) {
 	//cout << "Test : go into matchPattern " << endl;
 	results->clear();
@@ -803,11 +665,8 @@ void Database::matchPattern(QueryNode* node, QueryEdge* edge, vector<triple_t>* 
 	vector<sid_t> pred_bound = edge->bind_val;
 	vector<sid_t> tgt_bound = edge->node->bind_val;
 	
-	//修改为获取global对应的S set
-	//如果一个节点node存在多条边只需要获取第一条边的 bind_val(因为边和边之间是交集操作)
 	if (src_bound.size() == 0) {
 		bacth_loadEntities_global(pred_bound, dir, &src_bound);
-		//执行去重操作
 		sort_rem_dup(&src_bound);
 		node->bind_val.insert(node->bind_val.end(),src_bound.begin(), src_bound.end());
 	}
@@ -826,7 +685,6 @@ void Database::matchPattern(QueryNode* node, QueryEdge* edge, vector<triple_t>* 
 		}
 		
 		//cout << "s_set size = " << s_set.size() << endl;
-		//获取交集大小
 		inter_set = intersect(inter_set, src_bound);
 		//cout << "inter_set size = " << inter_set.size();
 		vector<sid_t> bind_prune = difference(src_bound, inter_set);
@@ -835,14 +693,8 @@ void Database::matchPattern(QueryNode* node, QueryEdge* edge, vector<triple_t>* 
 		src_bound = inter_set;
 	}
 
-	//按照src_bound的host分割(改到函数外部)
 	map<int, vector<sid_t>> initial_servers = get_initial_server(src_bound);
-	//打印结果 没问题啊
-	/*cout << "Test : print initial_servers = [";
-	for (sid_t tmp: initial_servers[0]) {
-		cout << tmp << ",";
-	}
-	cout << "]" << endl;*/
+	
 	vector<vector<triple_t>> res; res.resize(num_servers);
 
 	#pragma omp parallel for num_threads(num_servers) //reduction(+:sum)
@@ -866,16 +718,12 @@ void Database::matchPattern2(QueryNode* node, QueryEdge* edge, vector<triple_t>*
 	vector<sid_t> pred_bound = edge->bind_val;
 	vector<sid_t> tgt_bound = edge->node->bind_val;
 
-	//修改为获取global对应的S set
-	//如果一个节点node存在多条边只需要获取第一条边的 bind_val(因为边和边之间是交集操作)
 	if (src_bound.size() == 0) {
 		bacth_loadEntities_global(pred_bound, dir, &src_bound);
-		//执行去重操作
 		sort_rem_dup(&src_bound);
 		node->bind_val.insert(node->bind_val.end(), src_bound.begin(), src_bound.end());
 
 	}
-	//按照src_bound的host分割(改到函数外部)
 	map<int, vector<sid_t>> initial_servers = get_initial_server(src_bound);
 	vector<vector<triple_t>> res; res.resize(num_servers);
 	#pragma omp parallel for num_threads(num_servers) //reduction(+:sum)
@@ -884,8 +732,6 @@ void Database::matchPattern2(QueryNode* node, QueryEdge* edge, vector<triple_t>*
 		for (sid_t s : initial_servers[i]) {
 			vector<sid_t> pre_bound_tmp = pred_bound;
 			if (pred_bound.size() == 0) { //默认pre is bound
-				//pre_bound_tmp = &loadPredicates(s, dir);
-				//cout << "Test :get p set " << endl;
 				async_store[i][0]->loadPredicates(s, dir, &pre_bound_tmp);
 			}
 			for (sid_t p : pre_bound_tmp) {
@@ -924,176 +770,7 @@ void Database::bacth_loadEntities_global(const vector<sid_t> pset, dir_t d,vecto
 		result->insert(result->end(), ret.begin(), ret.end());
 	}
 }
-/**********************一些测试函数功能的函数***********************/
-void Database::testKeyIndex() {
-	//
-	srand((int)time(0));  // 产生随机种子
-	sid_t a = 131073,b = 1770751;
-	sid_t c = 33;
-	int loop = 1000;
-	dir_t d = dir_t::OUT; // 默认out
-	int testNum = 0, err = 0, err1 = 0;// , err2 = 0;
-	int sp_count = 0;
-	for (int i = 0; i < loop; i++) {
-		sid_t s = (rand() % (b - a + 1)) + a;
-		sid_t p = rand() % 33 + 1;
-		//sid_t sp_key = key_vpid_t(s, p, NO_INDEX, d);
-		//1. get o vals;
-		vector<sid_t> o_vals;
-		vector<sid_t> o_vals2;
-		async_store[0][0]->loadNeighbors(s, p, d, &o_vals);
-		triple_store[0]->get_neighbor(s, p, d, &o_vals2);
-		if (o_vals.size() != o_vals2.size()) {
-			sp_count++;
-		}
-		//2. 随机选择一个o ;by o p d  get s_vals
-		for (sid_t o : o_vals) {
-			vector<sid_t > s1_vals, s2_vals;
-			sid_t key_t;
-			if (p == 1 && d == OUT)
-				key_t = key_vpid_t(0, o, INDEX, d);
-			else
-				key_t = key_vpid_t(o, p, INDEX, inverse_dir(d));
-			//1.使用zset模式 string
-			async_store[0][0]->read_zset(key_t, &s1_vals);
-			//2.使用trippleDB模式
-			//async_store[0][0]->read_zset(key_t, &s2_vals);
-			if (!binary_search(s1_vals.begin(), s1_vals.end(), s)) {
-				err1++;
-				cout << "error in zset pattern1 : " << "s = " << s << "; p = " << p  <<"; o = " << o << endl;
-			}
-			/*if (!binary_search(s2_vals.begin(), s2_vals.end(), s)) {
-				err2++;
-				cout << "error in zset pattern2 : " << "s = " << s << "p = " << p << "o = " << o << endl;
-			}*/
-			testNum++;
-		}
 
-		
-	}
-	if (sp_count > 0) {
-		cout << "diff way get neighbor err num = " << sp_count << endl;
-	}
-	cout << "testNum = " << testNum  << " err1 = " << err1  << endl;
-	//cout << "testNum = " << testNum << " err = " << err << " err1 = " << err1 << "err2 = " << err2 << endl;
-	
-}
-
-
-void Database::testDumpAndRestore() {
-	//1.从redis数据或随机获取一个key
-	sid_t a = 131073, b = 1770751;
-	int tgt_id = (sid + 1) % 3;
-	printf("start testDumpAndRestore sid = %d\n",sid);
-	printf("sid = %d; tgs_id = %d\n", sid, tgt_id);
-	vector<sid_t> keys;
-	//2.dump and restore
-	for (int i = 0; i < 100; i++) {
-		sid_t v = (rand() % (b - a + 1)) + a;
-		sid_t sc_key = key_vpid_t(v, 0, NO_INDEX, OUT); //[sd_key,p_list]
-		string ret = triple_store[sid]->get_string_by_key(sc_key);
-		if (ret.empty()) continue;
-		keys.push_back(sc_key);
-		size_t len = 0;
-		//2.dump
-		const char* str = triple_store[sid]->dump(sc_key, &len);
-		//3.restore
-		if (str != NULL) {
-			triple_store[tgt_id]->restore(sc_key, str, len);
-		//	free(str);
-		}
-		else {
-			printf("str is null");
-		}
-	}
-	//4.测试
-	for (sid_t key : keys) {
-		vector<sid_t> ret = triple_store[sid]->get_set_member(key);
-		vector<sid_t> ret2 = triple_store[tgt_id]->get_set_member(key);
-		printf("key = %ld , old sid = %d , result size = %d, new sid = %d,result size = %d\n", key, sid, ret.size(), tgt_id, ret2.size());
-	}
-	printf("end testDumpAndRestore sid = %d, keys size = %d\n",sid, keys.size());
-
-}
-
-void Database::testMoveData() {
-	sid_t a = 131073, b = 1770751;
-	int tgt_id = (sid + 1) % 3;
-	printf("start testMoveData sid = %d\n", sid);
-	printf("sid = %d; tgs_id = %d\n", sid, tgt_id);
-	vector<sid_t> vset;
-	vector<sid_t> result;
-	//2.dump and restore
-	for (int i = 0; i < 100; i++) {
-		sid_t v = (rand() % (b - a + 1)) + a;
-		sid_t sc_key = key_vpid_t(v, 0, NO_INDEX, OUT); //[sd_key,p_list]
-		vector<sid_t> ret = triple_store[sid]->get_set_member(sc_key);
-		if (ret.size() == 0) continue;
-		result.push_back(ret.size());
-		vset.push_back(v);
-		client_reassign(sid, v, tgt_id);
-	}
-	printf("reassign data size = %d", vset.size());
-	for (int i = 0; i < vset.size();i++) {
-		sid_t sc_key = key_vpid_t(vset[i], 0, NO_INDEX, OUT); //[sd_key,p_list]
-		vector<sid_t> ret = triple_store[sid]->get_set_member(sc_key);
-		vector<sid_t> ret2 = triple_store[tgt_id]->get_set_member(sc_key);
-
-		if (ret.size() == 0 && ret2.size() == result[i]) {
-			printf("reassign key %ld success\n", vset[i]);
-		}
-		else {
-			printf("reassign key %ld error orign size = %d ,old size = %d ,new size = %d \n", vset[i],result[i],ret.size(),ret2.size());
-		}
-	}
-	//判定释放成功reassign
-	printf("end testMoveData sid = %d\n", sid);
-}
-//TODO add test for differnt 
-void Database:: testReadAndWrite() {
-	//读写10W条数据进行测试
-	//write use HINCRBY command
-	//10 轮测试
-	int round = 10;
-	for (int k = 0; k < num_servers; k++) {
-		vector<sid_t> vs;
-		srand((int)time(0));  // 产生随机种子  把0换成NULL也行
-		for (int i = 0; i < 100000 *(k + 1); i++) {
-			vs.push_back(rand() % 1000000);
-		}
-		sid_t start, end;
-		start = get_usec();
-		printf("test %d  for async_store\n",k);
-		printf("%d start write data in async_store\n",k);
-		async_store[k][0]->batch_write_test(vs);
-		//read use get command
-		printf("%d start read data in async_store\n",k);
-		vector<int> result1;
-		async_store[k][0]->batch_read_test(vs, &result1);
-		printf("%d result1 size = %d\n", k,result1.size());
-
-		sid_t end1 = get_usec();
-		printf("Tests: async_store in %d spend time = %d second\n", k, (end1 - start) / 1000000);
-		
-		//read use hget command
-		printf("test %d for count_store\n",k);
-		printf("%d start write data in counter_store\n",k);
-		counter_store[k]->batch_write_test(vs);
-		//read use get command
-		printf("%d start read data in counter_store\n",k);
-		vector<int> result2;
-		counter_store[k]->batch_read_test(vs, &result2);
-		printf("%d result2 size = %d\n", k ,result2.size());
-		end = get_usec();
-		printf("Tests: async_store in %d spend time = %d second\n", k, (end - end1) / 1000000);
-
-		printf("Tests: one loop in %d spend time = %d second\n", k, (end - start) / 1000000);
-	}
-	
-	printf("end function testReadAndWrite\n");
-}
-
-/****************************	End Test *******************************************/
 /************************* End: execute patterns on client side *******************************/
 
 
@@ -1101,9 +778,8 @@ void Database:: testReadAndWrite() {
 int Database::reassign_evaluate(int loc_s, sid_t v){
 	return get_reassign_info(loc_s, v);	
 }
-//基于DoI Index的评估策略 naive评估
 int Database::reassign_evaluate2(int loc_s, sid_t v) {
-	//1.判断节点存在性判断
+	//1.Judgment of node existence
 	if (!async_store[loc_s][0]->isExist(v)) return -1;
 
 	return get_max_DoI_Node(loc_s, v); 
@@ -1111,7 +787,7 @@ int Database::reassign_evaluate2(int loc_s, sid_t v) {
 }
 
 map<int, vector<sid_t>> Database::batch_reassign_evaluate2(int loc_s, vector<sid_t>& vs) {
-	//1.判断节点存在性判断
+	//1.Judgment of node existence
 	vector<sid_t> existNode = async_store[loc_s][0]->batch_isExist(vs);
 	map<int, vector<sid_t> > reassign_map;
 	if (existNode.empty()) return reassign_map;
@@ -1120,14 +796,6 @@ map<int, vector<sid_t>> Database::batch_reassign_evaluate2(int loc_s, vector<sid
 
 	return reassign_map;
 	//return counter_store[loc_s]->get_max_Di(v, loc_s, num_servers);
-}
-
-//new Reassign DoI evaluate
-int Database::new_reassign_evaluate(int loc_s, sid_t v) {
-	//1.判断节点存在性判断
-	if (!async_store[loc_s][0]->isExist(v)) return -1;
-
-	return get_max_DoI_Node_new(loc_s, v);
 }
 
 //////////////////////////////////////////////////////////////////////////////////
@@ -1154,7 +822,6 @@ bool Database::client_reassign_vd(int loc_s, sid_t v, dir_t d, int tgt_node){
 bool Database::client_migrate_vd(int loc_s, sid_t v, dir_t d, int tgt_node) {
 	bool flag = true;
 	sid_t sd_key = key_vpid_t(v, 0, NO_INDEX, d);
-	//1.获取triple_stor[loc_s]数据库的hostname 和 port host_names[i].c_str(), ports[i]
 	//const char* hostname = triple_store[loc_s]., int port
 	vector<sid_t> p_list;
 	async_store[loc_s][0]->read_zset(to_string(sd_key), &p_list);
@@ -1210,7 +877,6 @@ int Database::client_reassign(int loc_s, sid_t v, int tgt_node) {
 		return f;
 	}
 
-	//receive函数是给新节点数据添加索引信息和其他边缘信息
 	flag = flag && triple_store[tgt_node]->receive(v, true);
 	flag = flag && counter_db[tgt_node]->receive(v, false);
 	if (!flag){
@@ -1219,7 +885,6 @@ int Database::client_reassign(int loc_s, sid_t v, int tgt_node) {
 	}
 	set_v_loc(v, tgt_node);
 
-	//reasign是删除原来节点的索引信息和其他边缘信息
 	flag = flag && triple_store[loc_s]->reassign(v, true);
 	flag = flag && counter_db[loc_s]->reassign(v, false);
 
@@ -1231,58 +896,10 @@ int Database::client_reassign(int loc_s, sid_t v, int tgt_node) {
 	return f;
 }
 
-//TODO 未完待续
-int Database::batch_client_reassign(int loc_s, vector<sid_t> vs, int tgt_node) {
-
-}
-int Database::client_new_reassign(int loc_s, sid_t v, int tgt_node) {
-	int f = 1; //Right
-	if (request_global_reassign_lock(loc_s, v) == 0) {
-		f = 0; //Error 
-		return f;
-	}
-	bool flag = true;
-
-	//move base data to tgt node
-	flag = flag && client_reassign_vd(loc_s, v, OUT, tgt_node);
-	flag = flag && client_reassign_vd(loc_s, v, IN, tgt_node);
-
-	//printf("start client_reassign_vcount\n");
-	flag = flag && triple_store[loc_s]
-		->reassign_vcounter_weight(v, triple_store[tgt_node], true);
-	flag = flag && counter_db[loc_s]
-		->reassign_vcounter_weight(v, counter_db[tgt_node], false);
-	//move DoI Index info from loc to tgt
-	//printf("v = %ld,start reassign_doI_index\n",v);
-	flag = flag && counter_db[loc_s]->reassign_doI_index(v,num_servers, counter_db[tgt_node]);
-	//delete loc doI key
-	//printf("v = %ld start update_DoI_Index fuction\n",v);
-	flag = flag && update_DoI_Index(v, loc_s, tgt_node); 
-	if (!flag) {
-		f = -1; //Error
-		return f;
-	}
-	//printf("start receive fuction\n");
-	//receive函数是给新节点数据添加索引信息和其他边缘信息
-	flag = flag && triple_store[tgt_node]->receive(v, true);
-	flag = flag && counter_db[tgt_node]->receive(v, false);
-	if (!flag) {
-		f = -2; //Error
-		return f;
-	}
-	set_v_loc(v, tgt_node);
-	//reasign是删除原来节点的索引信息和其他边缘信息
-	flag = flag && triple_store[loc_s]->reassign(v, true);
-	flag = flag && counter_db[loc_s]->reassign(v, false);
-	//TODO 删除loc DoI 信息和其他关联信息
-	//for(int i=0;i<num)
-	flag = flag && counter_db[loc_s]->del_key(v);
-	if (!flag) {
-		f = -3;
-		return f;
-	}
-	return f;
-}
+//no 
+//int Database::batch_client_reassign(int loc_s, vector<sid_t> vs, int tgt_node) {
+//
+//}
 
 ////////////////////////////////////////////////////////////////////////////////////
 int Database::get_max_DoI_Node(int loc_s, sid_t v) {
@@ -1306,7 +923,7 @@ int Database::get_max_DoI_Node(int loc_s, sid_t v) {
 	}
 	return maxNode;
 }
-//TODO 未完待续
+//
 map<int, vector<sid_t> > Database::batch_get_max_DoI_Node(int loc_s, vector<sid_t>& vs) {
 	vector<int> result;
 	counter_store[loc_s]->batch_get_DoI_List(vs, num_servers, &result);
@@ -1330,30 +947,7 @@ map<int, vector<sid_t> > Database::batch_get_max_DoI_Node(int loc_s, vector<sid_
 	return reassign_map;
 }
 
-//add in new Reassign 
-int Database::get_max_DoI_Node_new(int loc_s, sid_t v) {
-	vector<int> result;
-	//printf("v = %ld loc = %d,get_DoI_List_new start\n", v, loc_s);
-	//TODO 这里获取的结果全为[0 0  0]
-	counter_db[loc_s]->getDoI_Index_size(v, num_servers, &result);
-	//counter_store[loc_s]->get_DoI_List(v, num_servers, &result);
-	//printf("v = %ld get_DoI_List_new succ res = [%d,%d,%d]\n",v,result[0], result[1], result[2]);
-	if (result.size() != num_servers) {
-		printf("Error : node %d to %d need 3 result and get %d result \n", loc_s, v, result.size());
-	}
-	assert(result.size() == num_servers);
-	//need some node point to v ? d ==IN
-	int maxNode = sid; //default local
-	int maxDi = result[sid];
-	for (int i = 0; i < num_servers; i++) {
-		if (result[i] > maxDi) {
-			maxDi = result[i];
-			maxNode = i;
-		}
-	}
 
-	return maxNode;
-}
 int Database::get_reassign_info(int loc_s, sid_t v){
 	vector<vector<int>> reassign_info_ts, reassign_info_cs;
 	reassign_info_ts.resize(num_servers);
@@ -1401,9 +995,7 @@ int Database::get_reassign_info(int loc_s, sid_t v){
 			obj_prev_reassign_weight = reassign_info_cs[i][4];
 		}
 	}
-	//TODO print reassign_info
 
-	//大部分reassign_evaluate ret = -1
 	if(obj_edgenum == 0 || !flag || locality_null)
 		return -1;
 	
@@ -1435,7 +1027,7 @@ int Database::get_reassign_info(int loc_s, sid_t v){
 	return server_chose;
 }
 
-//打分函数 f = locality - cfg->beta * (server_weight/(num_servers * active_obj_num))
+//Scoring function f = locality - cfg->beta * (server_weight/(num_servers * active_obj_num))
 double Database::fennel(int src_weight, int server_weight, int active_obj_num, int avg_weight, 
 		int o_weight, int locality){
 
@@ -1466,10 +1058,10 @@ int Database::batch_up_vertexweight(int sid, const vector<sid_t> &vs, int incr_w
 	return 1;
 }
 
-int Database::batch_up_DoI_index_info(int sid, const vector<triple_t>& triples) {
-
-	counter_store[sid]->batch_update_DoI_index(triples, cfg->edgelog_len);
-}
+//int Database::batch_up_DoI_index_info(int sid, const vector<triple_t>& triples) {
+//
+//	counter_store[sid]->batch_update_DoI_index(triples, cfg->edgelog_len);
+//}
 //add new function in 2020/07
 
 sid_t Database::loadNode(sid_t v) {

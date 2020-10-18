@@ -8,10 +8,6 @@
 extern "C"{
 #include <hiredis/hiredis.h>
 #include <hiredis/async.h>
-//#include <hiredis/adapters/libevent.h>
-//#include <hiredis/adapters/libev.h>
-//#include <event2/buffer.h>
-//#include <event2/buffer_compat.h>
 #include "type.h"
 }
 

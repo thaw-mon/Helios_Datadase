@@ -27,9 +27,6 @@ class QueryEdge{
 		//int is_key_new = 0;
 		//vector<sid_t> candi_src_bind;
 
-		//add edge_cut counter; remove add to Node;
-		//int edge_cut_counter = 0; //³õÊ¼»¯Îª0
-
 	public:
 		QueryEdge(){}
 		QueryEdge(int tag, dir_t d, int joint, vector<sid_t> bind_v)
@@ -39,7 +36,6 @@ class QueryEdge{
 		virtual ~QueryEdge();
 
 		int preprocess(int tgt_s,AsyncRedisStore* async_store);
-		//int preprocess(int tgt_s, TripleDB* tripledb);
 		/////////////////////////////
 		template <typename Archive> void serialize(Archive &ar, const unsigned int version){
 			ar & tag;	

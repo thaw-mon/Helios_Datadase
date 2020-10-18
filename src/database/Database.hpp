@@ -204,7 +204,7 @@ class Database{
 
 		map<int, vector<sid_t>> batch_get_max_DoI_Node(int loc_s, vector<sid_t>& vs);
 
-		int get_max_DoI_Node_new(int loc_s, sid_t v);
+		//int get_max_DoI_Node_new(int loc_s, sid_t v);
 
 		/* reassign related*/
 		int get_reassign_info(int loc_s, sid_t v);
@@ -215,7 +215,7 @@ class Database{
 
 		map<int, vector<sid_t>> batch_reassign_evaluate2(int loc_s, vector<sid_t>& vs);
 
-		int new_reassign_evaluate(int loc_s, sid_t v);
+		//int new_reassign_evaluate(int loc_s, sid_t v);
 
 		//int reassign(int loc_s, sid_t v, int tgt_node);
 
@@ -223,9 +223,9 @@ class Database{
 
 		int client_reassign(int loc_s, sid_t v, int tgt_node);
 
-		int batch_client_reassign(int loc_s, vector<sid_t> vs, int tgt_node);
+		//int batch_client_reassign(int loc_s, vector<sid_t> vs, int tgt_node);
 
-		int client_new_reassign(int loc_s, sid_t v, int tgt_node);
+		//int client_new_reassign(int loc_s, sid_t v, int tgt_node);
 
 		//int client_reassign2(int loc_s, sid_t v, int tgt_node);
 
@@ -250,13 +250,13 @@ class Database{
 
 		void bacth_loadEntities_global(const vector<sid_t> pset, dir_t d, vector<sid_t>* result);
 
-		void testKeyIndex();
+		//void testKeyIndex();
 
-		void testDumpAndRestore();
+		//void testDumpAndRestore();
 
-		void testMoveData();
+		//void testMoveData();
 
-		void testReadAndWrite();
+		//void testReadAndWrite();
 
 		int _client_pattern_evaluate(int sid, vector<sid_t> src_bind, QueryNode* queryRoot, 
 				vector<triple_t> *results);
@@ -269,9 +269,9 @@ class Database{
 
 		void insert_DoI_index4(vector<triple_t> tripple_res, int tgt_s);
 
-		void insert_DoI_index_new(vector<triple_t> tripple_res, int tgt_s);
+		//void insert_DoI_index_new(vector<triple_t> tripple_res, int tgt_s);
 
-		void insert_DoI_index_new2(vector<triple_t> tripple_res, int tgt_s);
+		//void insert_DoI_index_new2(vector<triple_t> tripple_res, int tgt_s);
 
 		bool update_DoI_Index(sid_t v, int loc, int tgt);
 		
@@ -289,7 +289,7 @@ class Database{
 		int batch_up_edgeweight(int sid, sid_t root_v, const vector<triple_t> &triples);
 		int batch_up_vertexweight(int sid, const vector<sid_t> &vs, int incr_weight);
 		
-		int batch_up_DoI_index_info(int sid, const vector<triple_t>& triples);
+		//int batch_up_DoI_index_info(int sid, const vector<triple_t>& triples);
 		/*
 		 * batch request & release lock
 		 * on the initial server of each obj, a lock is maintain for concurrent read/write and reassignment

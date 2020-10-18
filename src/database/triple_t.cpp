@@ -11,7 +11,7 @@ const char* intToChar(sid_t num){
 	return array;
 }
 
-/*set1 and set2 are sorted*/ //获取集合的交集
+/*set1 and set2 are sorted*/ 
 vector<sid_t> intersect(const vector<sid_t> &set1, const vector<sid_t> &set2){
 	int len = 0, m = 0;
 	size_t len1 = set1.size(), len2 = set2.size();
@@ -80,7 +80,7 @@ int sort_rem_dup(vector<sid_t> *set){
 		if(i != prev_index){
 			(*set)[prev_index] = cur_ele;
 		}
-		prev_ele = (*set)[prev_index]; //这条语句原来缺失了，导致结果出现问题
+		prev_ele = (*set)[prev_index];
 	}
 	prev_index++;
 	set->resize(prev_index);
@@ -88,7 +88,6 @@ int sort_rem_dup(vector<sid_t> *set){
 }
 
 /* set 1 - set2*/
-//返回set1中存在但是set2中不存在的元素集合，即为仅在set1中存在的元素
 vector<sid_t> difference(vector<sid_t> &set1, vector<sid_t> &set2){
 	int sz1 = set1.size(), sz2 = set2.size();
 	if(sz1 < 1)

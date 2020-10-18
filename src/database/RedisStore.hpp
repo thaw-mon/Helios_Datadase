@@ -83,7 +83,6 @@ class RedisStore{
 	public:
 		RedisStore(const char* hostname, int port){
 			struct timeval timeout = {1, 500000};
-			//这里连接失败了
 			contxt = redisConnectWithTimeout(hostname, port, timeout);
 
 			while(contxt == NULL || contxt->err){
@@ -299,7 +298,6 @@ class RedisStore{
 		char* dump(sid_t key, size_t *len){
 			redisReply* reply = (redisReply*)redisCommand(contxt, "DUMP %ld", key);
 			char* str = NULL;
-			//由于之前没有添加这个判定条件导致dump 返回null时使得assert返回错误
 			if (reply == NULL) { 
 				printf("ERROR : dump repley is NULL key = %ld\n" ,key);
 				//return str;
@@ -318,17 +316,14 @@ class RedisStore{
 			else {
 				printf("dump: reback error type : %d\n", reply->type);
 			}
-			//freeReplyObject(reply); //这里释放连接导致数据没了
-			free(reply); //大概率是这里导致了问题出现
+			free(reply);
 			return str;
 		}
 
-		//Question : ss << reply->str; 无法正常获取到相关的str数据 ss返回为null
 		const char* dump2(sid_t key, size_t* len) {
 			redisReply* reply = (redisReply*)redisCommand(contxt, "DUMP %ld", key);
 			stringstream ss;
 			string strResult;
-			//由于之前没有添加这个判定条件导致dump 返回null时使得assert返回错误
 			if (reply == NULL) {
 				printf("ERROR : dump repley is NULL key = %ld\n", key);
 				//*len = -1;
@@ -339,17 +334,7 @@ class RedisStore{
 				printf("DUMP error %s!\n", reply->str);
 			if (reply->type == REDIS_REPLY_STRING) {
 				ss << reply->str;
-				//ss >> strResult;
-				//strResult = reply->str; //Question 数据无法copy
 				*len = reply->len;
-				//打印一下strResult是否存在数据
-				/*if (strResult.empty() ) printf("Error dump data no get key = %ld\n", key);
-				if (strResult.size() != (*len)) {
-					printf("strResult size = %d, len = %d", strResult.size(), reply->len);
-				}*/
-				//printf("strResult size = %d, len = %d", ss.str.str.s reply->len);
-				//assert(strResult.size() == (*len));
-				//printf("key = %ld dump :type = %d ,len %d strlen %d reply->str len %d\n", key, reply->type, *len, strlen(str),strlen(reply->str)); //正常情况应该是二者要相等的啊
 			}
 			else if (reply->type == REDIS_REPLY_NIL) {
 				printf("dump : key %ld : not exist!\n", key);

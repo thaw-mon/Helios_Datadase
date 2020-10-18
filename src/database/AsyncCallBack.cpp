@@ -142,7 +142,7 @@ void read_zset_callback(redisAsyncContext *c, void *r, void *privdata){
 		printf("EMPTY - read_zset - %s\n", reply->str);
 		goto end;
 	}
-	//printf("reply size %d\n", reply->elements); //TODO add 查看打印结果测试
+	//printf("reply size %d\n", reply->elements); 
 	for(int i = 0; i<reply->elements; i++){
 		redisReply* r_ele = reply->element[i];
 
@@ -245,17 +245,6 @@ void traverse_callback(redisAsyncContext *c, void *r, void *privdata){
 	
 	//o_vals = deserial_vector(reply->str, reply->len);
 	rt.o_vals = deserial_vector(reply->str, reply->len);
-	//if (node->bind_val.size() > 0) {
-	//	set_vals.clear();
-	//	set_vals.insert(o_vals.begin(), o_vals.end());
-	//	//o_vals.assign(set_vals.begin(), set_vals.end());
-	//	o_vals.clear();
-	//	for (sid_t o : node->bind_val) {
-	//		if (binary_search(set_vals.begin(), set_vals.end(), o)) {
-	//			o_vals.push_back(o);
-	//		}
-	//	}
-	//}
 
 	results->push_back(rt);
 	
@@ -402,9 +391,7 @@ void batch_getloc3_callback(redisAsyncContext* c, void* r, void* privdata) {
 	else if (reply->type == REDIS_REPLY_NIL) {
 		loc = connectto_sid;
 	}
-	//if (v_locs->find(loc) == v_locs->end()) {
-	//	v_locs->insert(pair<int, vector<sid_t>>(loc, vector<sid_t>()));
-	//}
+	
 	(*v_locs)[vid] = loc;
 	//(*v_locs)[loc].push_back(vid);
 	goto end;

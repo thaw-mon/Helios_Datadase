@@ -68,7 +68,7 @@ class TripleDB : public RedisStore{
 			}
 			flush_command();
 		}
-		//默认值为1
+
 		void batch_insert_DoI_index(vector<vector<sid_t>> DoI_index) {
 			int num = DoI_index.size();
 			for (int i = 0; i < num; i++) {
@@ -84,14 +84,14 @@ class TripleDB : public RedisStore{
 			flush_command();
 		}
 
-		//转存[sd_key,p_list]
+		//restore [sd_key,p_list]
 		bool reassign_vd(sid_t v, dir_t d, TripleDB* tgtDB){
 			bool flag = true;
 			sid_t sd_key = key_vpid_t(v, 0, NO_INDEX, d);
 			//printf("TEST: reassign_vd start sd_key %ld %ld\n", v, sd_key);
 			size_t len = 0;
 			char* str2 = dump(sd_key, &len);
-			//if (len < 0) flag = false; //len小于1说明  reply ==null
+			//if (len < 0) flag = false; //  reply ==null
 			if (str2 != NULL) {
 				flag = flag && tgtDB->restore(sd_key, str2, len);
 				free(str2);
@@ -110,17 +110,17 @@ class TripleDB : public RedisStore{
 			return flag;
 		}
 
-		//转存 [sp_key ,o_vals]
+		//restore [sp_key ,o_vals]
 		bool reassign_vpd(sid_t v, sid_t p,dir_t d, TripleDB* tgtDB){
 			bool flag = true;
 			sid_t sp_key = key_vpid_t(v, p, NO_INDEX, d);
 			//printf("TEST: reassign_vpd start sp_key %ld %ld\n", v, sp_key);
 			size_t len = 0;
 			char* str = dump(sp_key, &len);
-			//if (len < 0) flag = false; //len小于1说明  reply ==null
+			//if (len < 0) flag = false; //  reply ==null
 			if (str != NULL) {
 				flag = flag && tgtDB->restore(sp_key, str, len);
-				free(str); //释放声请的内存空间
+				free(str); 
 			}
 			//assert(str != NULL);
 			if(!flag)
@@ -219,7 +219,7 @@ class TripleDB : public RedisStore{
 			freeReplyObject(reply);
 		}
 
-		//转存 [sc_key,count] 和 [ew_key,EDGE_WEIGHT] 
+		//[sc_key,count] and [ew_key,EDGE_WEIGHT] 
 		bool reassign_vcounter_weight(sid_t v, TripleDB* tgtDB, bool isTS){
 			bool flag = true;
 			sid_t sc_key = key_vpid_t(v, 0, COUNTER, (dir_t)0);
@@ -330,7 +330,6 @@ class TripleDB : public RedisStore{
 			return results;	
 		}
 
-		//重新分配节点或count 
 		int reassign(sid_t v, bool isTS){
 			//printf("start reassign  : v = %ld, isTs = %d\n", v, isTS);
 
@@ -367,15 +366,12 @@ class TripleDB : public RedisStore{
 				ret = 0;
 				//return 1;
 			}
-			//这里没有打印reply释放是正确结果
 			assert(reply != NULL);
 			if (reply->type == REDIS_REPLY_ERROR) {
 				printf("receive v = %ld isTs = %d, ERR %s\n", v, isTS ,reply->str);
 				ret = 0;
 			}
-			//printf("receive reply = %s\n", reply->str);
 			freeReplyObject(reply);
-			//printf("end receive  : v = %ld, isTs = %d\n", v, isTS);
 			return ret;
 		}
 
@@ -391,7 +387,6 @@ class TripleDB : public RedisStore{
 			int suc = 0;
 			if(reply->type == REDIS_REPLY_INTEGER){
 				suc = reply->integer;
-				//printf("reassign lock %d %s\n", suc, reply->str); //打印结果看看
 			}
 			freeReplyObject(reply);
 			return suc;

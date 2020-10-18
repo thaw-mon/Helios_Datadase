@@ -33,7 +33,6 @@ class Dictionary : public RedisStore{
 					"SET %ld %s", id, str.c_str());
 			pip_command++;
 			
-			//TODO 改为100测试一下
 			if(pip_command > 100)
 				flush_command();
 			return true;
