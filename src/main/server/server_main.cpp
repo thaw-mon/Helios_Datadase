@@ -64,7 +64,7 @@ int main(int argc, char* argv[]) {
 
 
 	////////////////////////////////
-	HeliosConfig config("../helios.cfg", global_num_servers);
+	HeliosConfig config("../config/helios.cfg", global_num_servers);
 	current_nodeName = config.host_names[(int)world_rank];
 	assert(global_num_servers == config.global_num_servers);
 	//shared by all threads
@@ -132,7 +132,6 @@ int main(int argc, char* argv[]) {
 
 		boost::thread subQueryPlan_p = boost::thread(boost::bind(&subQueryPlan_proxy2, world_rank, &config, mem));
 
-		//注释掉，移动到用户端进程
 		//////////////////////////////////
 		vector<Repartitioner*> reparts;
 		pthread_t* repart_threads;
@@ -142,9 +141,7 @@ int main(int argc, char* argv[]) {
 			repart_threads = new pthread_t[num_repart_threads];
 			Repartitioner* repart = new Repartitioner(world_rank, &config, mem);//, global_num_servers);
 			reparts.push_back(repart);
-			//开启动态分割线程
 			pthread_create(&(repart_threads[0]), NULL, repartitioner_thread2, (void*)repart);
-			//开启更新边或节点线程
 			for (int i = 1; i < num_repart_threads; i++) {
 				Repartitioner* repart2 = new Repartitioner(world_rank, &config, mem);//, 1);
 				reparts.push_back(repart2);

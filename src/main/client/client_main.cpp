@@ -23,7 +23,7 @@ int main(int argc, char* argv[]) {
 	vector<boost::thread> clientThread_list;
 
 	////////////////////////// Validate the number of command line parameters.
-	if (argc < 3) errorReport("Usage: ./server <numberOfClients> <numberOfQueries>");
+	if (argc < 3) errorReport("Usage: ./helios_client <numberOfClients> <numberOfQueries>");
 	numberOfClients = atoi(argv[1]);
 	numberOfQueries = atoi(argv[2]);
 
@@ -41,7 +41,7 @@ int main(int argc, char* argv[]) {
 
 
 	////////////////////////////////
-	HeliosConfig config("../helios.cfg", global_num_servers);
+	HeliosConfig config("../config/helios.cfg", global_num_servers);
 	current_nodeName = config.host_names[(int)world_rank];
 	assert(global_num_servers == config.global_num_servers);
 	//shared by all threads
@@ -62,9 +62,8 @@ int main(int argc, char* argv[]) {
 	for (int client_nbr = 1; client_nbr <= numberOfClients; client_nbr++)
 		clientThread_list[client_nbr - 1].join();
 
-	//打印 : 用户query task 进程结束
+	
 	cout << "client task thread end " << endl;
-	//delete mem;
 	////////////////////////////////
 	MPI_Finalize();
 
